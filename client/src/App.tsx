@@ -1,26 +1,28 @@
 import './App.css'
+import { Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
     <>
       <section id="center">
-    
-        <div>
-          <h1>GymRat</h1>
-          <p>
-            Track workouts, build routines, and monitor progress.
-          </p>
-        </div>
+        <Navbar />
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
       </section>
 
-      <div className="ticks"></div>
-
-  
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+      
     </>
-  )
+  );
 }
 
 export default App
