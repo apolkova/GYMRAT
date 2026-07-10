@@ -1,12 +1,32 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { clearAuthStorage, getStoredToken } from "../services/auth";
 
 function Navbar() {
+  const navigate = useNavigate();
+  const isLoggedIn = Boolean(getStoredToken());
+
+  function handleLogout() {
+    clearAuthStorage();
+    navigate("/login");
+  }
+
   return (
     <nav>
       <Link to="/">GymRat</Link>{" "}
-      <Link to="/login">Login</Link>{" "}
-      <Link to="/register">Register</Link>{" "}
-      <Link to="/dashboard">Dashboard</Link>
+
+      {isLoggedIn ? (
+        <>
+          <Link to="/dashboard">Dashboard</Link>{" "}
+          <button type="button" onClick={handleLogout}>
+            Logout
+          </button>
+        </>
+      ) : (
+        <>
+          <Link to="/login">Login</Link>{" "}
+          <Link to="/register">Register</Link>
+        </>
+      )}
     </nav>
   );
 }
