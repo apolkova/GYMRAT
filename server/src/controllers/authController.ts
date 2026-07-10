@@ -3,6 +3,7 @@ import type { Request, Response } from "express";
 import prisma from "../lib/prisma.js";
 import { signToken } from "../utils/jwt.js";
 
+
 //register endpoint
 export async function register(req: Request, res: Response) {
   try {
@@ -110,4 +111,10 @@ export async function login(req: Request, res: Response) {
       message: "Something went wrong while logging in",
     });
   }
+}
+
+export function getMe(req: Request, res: Response): void {
+  res.json({
+    user: req.user,
+  });
 }
