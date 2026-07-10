@@ -20,6 +20,7 @@ function Navbar() {
           <Link to="/exercises">Exercises</Link>{" "}
           <Link to="/workouts">Workouts</Link>{" "}
           <Link to="/workouts/new">Log Workout</Link>{" "}
+          <Link to="/progress">Progress</Link>{" "}
           <button type="button" onClick={handleLogout}>
             Logout
           </button>
