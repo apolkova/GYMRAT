@@ -43,7 +43,9 @@ function Workouts() {
         <ul>
           {workouts.map((workout) => (
             <li key={workout.id}>
-              <strong>{workout.title}</strong>{" "}
+              <Link to={`/workouts/${workout.id}`}>
+                <strong>{workout.title}</strong>
+              </Link>
               <span>{new Date(workout.date).toLocaleDateString()}</span>
 
               {workout.notes && <p>{workout.notes}</p>}
