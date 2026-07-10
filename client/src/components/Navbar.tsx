@@ -18,6 +18,8 @@ function Navbar() {
         <>
           <Link to="/dashboard">Dashboard</Link>{" "}
           <Link to="/exercises">Exercises</Link>{" "}
+          <Link to="/workouts">Workouts</Link>{" "}
+          <Link to="/workouts/new">Log Workout</Link>{" "}
           <button type="button" onClick={handleLogout}>
             Logout
           </button>
