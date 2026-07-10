@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { getWorkoutById } from "../services/workouts";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { getWorkoutById, deleteWorkout } from "../services/workouts";
 import type { Workout } from "../types/workout";
 
 function WorkoutDetail() {
@@ -8,6 +8,8 @@ function WorkoutDetail() {
   const [workout, setWorkout] = useState<Workout | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     async function loadWorkout() {
@@ -30,6 +32,30 @@ function WorkoutDetail() {
 
     loadWorkout();
   }, [id]);
+
+  async function handleDelete() {
+    if (!id) {
+      return;
+    }
+
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this workout?"
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      setIsDeleting(true);
+      await deleteWorkout(id);
+      navigate("/workouts");
+    } catch {
+      setError("Unable to delete workout.");
+    } finally {
+      setIsDeleting(false);
+    }
+  }
 
   const totalVolumeKg =
     workout?.sets.reduce((sum, set) => {
@@ -68,6 +94,11 @@ function WorkoutDetail() {
               ))}
             </ul>
           </section>
+
+          <button type="button" onClick={handleDelete} disabled={isDeleting}>
+            {isDeleting ? "Deleting..." : "Delete workout"}
+          </button>
+          
         </>
       ) : (
         <p>Workout not found.</p>

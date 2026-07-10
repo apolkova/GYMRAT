@@ -102,7 +102,7 @@ function NewWorkout() {
       }
 
       const reps = Number(set.reps);
-      const weight = Number(set.weight);
+      const weight = Number(set.weight.replace(",", "."));
 
       if (Number.isNaN(reps) || Number.isNaN(weight)) {
         setError("Reps and weight must be valid numbers.");
@@ -211,12 +211,13 @@ function NewWorkout() {
                 <div>
                   <label>Weight</label>
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="decimal"
                     value={set.weight}
                     onChange={(event) =>
                       updateSet(index, "weight", event.target.value)
                     }
-                    placeholder="135"
+                    placeholder="20"
                   />
                 </div>
 

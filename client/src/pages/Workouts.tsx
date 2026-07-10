@@ -27,6 +27,7 @@ function Workouts() {
   return (
     <main>
       <h1>Workouts</h1>
+
       <p>Review your logged workouts.</p>
 
       <p>
@@ -46,6 +47,7 @@ function Workouts() {
               <Link to={`/workouts/${workout.id}`}>
                 <strong>{workout.title}</strong>
               </Link>
+              
               <span>{new Date(workout.date).toLocaleDateString()}</span>
 
               {workout.notes && <p>{workout.notes}</p>}

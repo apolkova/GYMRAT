@@ -24,3 +24,7 @@ export async function createWorkout(input: CreateWorkoutInput) {
   const response = await api.post<CreateWorkoutResponse>("/workouts", input);
   return response.data.workout;
 }
+
+export async function deleteWorkout(id: string) {
+  await api.delete(`/workouts/${id}`);
+}
