@@ -50,7 +50,7 @@ model WorkoutSet {
   setNumber Int
   reps      Int
   weight    Float
-  unit      String   @default("lb")
+  unit      String   @default("kg")
 
   createdAt DateTime @default(now())
 }

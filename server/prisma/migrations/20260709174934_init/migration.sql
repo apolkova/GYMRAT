@@ -44,7 +44,7 @@ CREATE TABLE "WorkoutSet" (
     "setNumber" INTEGER NOT NULL,
     "reps" INTEGER NOT NULL,
     "weight" DOUBLE PRECISION NOT NULL,
-    "unit" TEXT NOT NULL DEFAULT 'lb',
+    "unit" TEXT NOT NULL DEFAULT 'kg',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "WorkoutSet_pkey" PRIMARY KEY ("id")

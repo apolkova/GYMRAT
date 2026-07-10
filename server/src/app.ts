@@ -5,6 +5,7 @@ import prisma from "./lib/prisma.js"; //testing
 import authRoutes from "./routes/authRoutes.js";
 import exerciseRoutes from "./routes/exerciseRoutes.js";
 import workoutRoutes from "./routes/workoutRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/exercises", exerciseRoutes);
 app.use("/api/workouts", workoutRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 app.get("/api/health", (_req, res) => {
   res.json({

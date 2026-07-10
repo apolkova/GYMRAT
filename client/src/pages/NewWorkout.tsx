@@ -23,7 +23,7 @@ function NewWorkout() {
       exerciseId: "",
       reps: "",
       weight: "",
-      unit: "lb",
+      unit: "kg",
     },
   ]);
 
@@ -67,7 +67,7 @@ function NewWorkout() {
         exerciseId: "",
         reps: "",
         weight: "",
-        unit: "lb",
+        unit: "kg",
       },
     ]);
   }
@@ -114,7 +114,7 @@ function NewWorkout() {
         setNumber: index + 1,
         reps,
         weight,
-        unit: set.unit || "lb",
+        unit: set.unit || "kg",
       });
     }
 

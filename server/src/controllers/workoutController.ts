@@ -151,7 +151,7 @@ export async function createWorkout(
                 setNumber: set.setNumber as number,
                 reps: set.reps as number,
                 weight: set.weight as number,
-                unit: set.unit ?? "lb",
+                unit: set.unit ?? "kg",
             })),
             },
         },
