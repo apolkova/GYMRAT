@@ -17,6 +17,7 @@ function Navbar() {
       {isLoggedIn ? (
         <>
           <Link to="/dashboard">Dashboard</Link>{" "}
+          <Link to="/exercises">Exercises</Link>{" "}
           <button type="button" onClick={handleLogout}>
             Logout
           </button>

@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Exercises from "./pages/Exercises";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -22,6 +23,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/exercises"
+            element={
+              <ProtectedRoute>
+                <Exercises />
               </ProtectedRoute>
             }
           />
