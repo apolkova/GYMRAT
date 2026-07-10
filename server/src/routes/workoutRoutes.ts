@@ -4,6 +4,7 @@ import {
   deleteWorkout,
   getWorkoutById,
   getWorkouts,
+  updateWorkout,
 } from "../controllers/workoutController.js";
 import { requireAuth } from "../middleware/authMiddleware.js";
 
@@ -15,5 +16,6 @@ router.get("/", getWorkouts);
 router.post("/", createWorkout);
 router.get("/:id", getWorkoutById);
 router.delete("/:id", deleteWorkout);
+router.put("/:id", updateWorkout);
 
 export default router;

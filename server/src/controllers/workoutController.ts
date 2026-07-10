@@ -224,3 +224,118 @@ export async function deleteWorkout(
     });
   }
 }
+
+export async function updateWorkout(
+  req: Request,
+  res: Response
+): Promise<void> {
+  try {
+    if (!req.user) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
+    const id = req.params.id;
+
+    if (!id || Array.isArray(id)) {
+      res.status(400).json({ message: "Workout id is required" });
+      return;
+    }
+
+    const body = req.body as {
+      title?: string;
+      notes?: string;
+      sets?: WorkoutSetInput[];
+    };
+
+    const { title, notes } = body;
+    const workoutSets = body.sets;
+
+    if (!title) {
+      res.status(400).json({ message: "Workout title is required" });
+      return;
+    }
+
+    if (!Array.isArray(workoutSets) || workoutSets.length === 0) {
+      res.status(400).json({
+        message: "At least one workout set is required",
+      });
+      return;
+    }
+
+    for (const set of workoutSets) {
+      if (
+        !set.exerciseId ||
+        typeof set.setNumber !== "number" ||
+        typeof set.reps !== "number" ||
+        typeof set.weight !== "number"
+      ) {
+        res.status(400).json({
+          message:
+            "Each set must include exerciseId, setNumber, reps, and weight",
+        });
+        return;
+      }
+    }
+
+    const existingWorkout = await prisma.workout.findFirst({
+      where: {
+        id,
+        userId: req.user.id,
+      },
+    });
+
+    if (!existingWorkout) {
+      res.status(404).json({ message: "Workout not found" });
+      return;
+    }
+
+    const workout = await prisma.$transaction(async (tx) => {
+      await tx.workoutSet.deleteMany({
+        where: {
+          workoutId: id,
+        },
+      });
+
+      return tx.workout.update({
+        where: {
+          id,
+        },
+        data: {
+          title,
+          notes: notes ?? null,
+          sets: {
+            create: workoutSets.map((set) => ({
+              exerciseId: set.exerciseId as string,
+              setNumber: set.setNumber as number,
+              reps: set.reps as number,
+              weight: set.weight as number,
+              unit: set.unit ?? "kg",
+            })),
+          },
+        },
+        include: {
+          sets: {
+            include: {
+              exercise: true,
+            },
+            orderBy: {
+              setNumber: "asc",
+            },
+          },
+        },
+      });
+    });
+
+    res.json({
+      message: "Workout updated successfully",
+      workout,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Something went wrong while updating the workout",
+    });
+  }
+}

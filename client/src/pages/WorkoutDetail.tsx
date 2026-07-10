@@ -57,6 +57,14 @@ function WorkoutDetail() {
     }
   }
 
+  function handleEdit() {
+    if (!workout) {
+      return;
+    }
+
+    navigate(`/workouts/${workout.id}/edit`);
+  }
+
   const totalVolumeKg =
     workout?.sets.reduce((sum, set) => {
       return sum + set.reps * set.weight;
@@ -95,10 +103,15 @@ function WorkoutDetail() {
             </ul>
           </section>
 
-          <button type="button" onClick={handleDelete} disabled={isDeleting}>
-            {isDeleting ? "Deleting..." : "Delete workout"}
-          </button>
-          
+          <div>
+            <button type="button" onClick={handleEdit}>
+              Edit workout
+            </button>
+
+            <button type="button" onClick={handleDelete} disabled={isDeleting}>
+              {isDeleting ? "Deleting..." : "Delete workout"}
+            </button>
+          </div>
         </>
       ) : (
         <p>Workout not found.</p>

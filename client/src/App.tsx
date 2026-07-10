@@ -10,6 +10,7 @@ import NewWorkout from "./pages/NewWorkout";
 import Workouts from "./pages/Workouts";
 import WorkoutDetail from "./pages/WorkoutDetail";
 import Progress from "./pages/Progress";
+import EditWorkout from "./pages/EditWorkout";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -67,6 +68,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Progress />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/workouts/:id/edit"
+            element={
+              <ProtectedRoute>
+                <EditWorkout />
               </ProtectedRoute>
             }
           />

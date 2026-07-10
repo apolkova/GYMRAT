@@ -28,3 +28,12 @@ export async function createWorkout(input: CreateWorkoutInput) {
 export async function deleteWorkout(id: string) {
   await api.delete(`/workouts/${id}`);
 }
+
+export async function updateWorkout(id: string, input: CreateWorkoutInput) {
+  const response = await api.put<CreateWorkoutResponse>(
+    `/workouts/${id}`,
+    input
+  );
+
+  return response.data.workout;
+}
