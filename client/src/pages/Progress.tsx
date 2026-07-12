@@ -73,9 +73,11 @@ function Progress() {
 
   return (
     <main>
-      <h1>Progress</h1>
-      <p>Track strength progress by exercise.</p>
-
+      <div className="page-header">
+        <h1>Progress</h1>
+        <p>Track strength progress by exercise.</p>
+      </div>
+      
       {error && <p>{error}</p>}
 
       {isLoadingExercises ? (
@@ -98,11 +100,12 @@ function Progress() {
               ))}
             </select>
           </div>
+          <p></p>
 
           {isLoadingProgress ? (
             <p>Loading progress...</p>
           ) : progress ? (
-            <section>
+            <section className="card">
               <h2>{progress.exercise.name}</h2>
 
               <p>Max weight: {progress.summary.maxWeight} kg</p>

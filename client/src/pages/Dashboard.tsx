@@ -39,13 +39,16 @@ function Dashboard() {
 
   return (
     <main>
-      <h1>Dashboard</h1>
+      <div className="page-header">
+        <h1>Dashboard</h1>
+        <p>Welcome back to GymRat.</p>
+      </div>
 
       {user && <p>Welcome, {user.name || user.email}.</p>}
 
-      <button onClick={handleLogout}>Logout</button>
+      <p></p>
 
-      <section>
+      <section className="card">
         <h2>Workout Summary</h2>
 
         {error && <p>{error}</p>}

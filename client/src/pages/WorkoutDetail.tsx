@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { getWorkoutById, deleteWorkout } from "../services/workouts";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { deleteWorkout, getWorkoutById } from "../services/workouts";
 import type { Workout } from "../types/workout";
 
 function WorkoutDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [workout, setWorkout] = useState<Workout | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
   const [isDeleting, setIsDeleting] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function loadWorkout() {
@@ -72,49 +73,96 @@ function WorkoutDetail() {
 
   return (
     <main>
-      <p>
-        <Link to="/workouts">Back to workouts</Link>
-      </p>
+      <div className="page-header">
+        <p>
+          <Link to="/workouts" className="muted">
+            ← Back to workouts
+          </Link>
+        </p>
 
-      {error && <p>{error}</p>}
+        {isLoading ? (
+          <>
+            <h1>Workout</h1>
+            <p>Loading workout...</p>
+          </>
+        ) : workout ? (
+          <>
+            <h1>{workout.title}</h1>
+            <p>{new Date(workout.date).toLocaleDateString()}</p>
+          </>
+        ) : (
+          <>
+            <h1>Workout</h1>
+            <p>Workout not found.</p>
+          </>
+        )}
+      </div>
+
+      {error && <p className="error">{error}</p>}
 
       {isLoading ? (
-        <p>Loading workout...</p>
+        <section className="card">
+          <p>Loading workout...</p>
+        </section>
       ) : workout ? (
-        <>
-          <h1>{workout.title}</h1>
-
-          <p>{new Date(workout.date).toLocaleDateString()}</p>
-
+        <section className="card">
           {workout.notes && <p>{workout.notes}</p>}
 
-          <p>Total volume lifted: {totalVolumeKg} kg</p>
+          <div className="stat-grid">
+            <div className="card">
+              <p className="muted">Total volume lifted</p>
+              <p className="stat-value">{totalVolumeKg} kg</p>
+            </div>
+
+            <div className="card">
+              <p className="muted">Total sets</p>
+              <p className="stat-value">{workout.sets.length}</p>
+            </div>
+
+            <div className="card">
+              <p className="muted">Date</p>
+              <p className="stat-value">
+                {new Date(workout.date).toLocaleDateString()}
+              </p>
+            </div>
+          </div>
 
           <section>
             <h2>Sets</h2>
 
-            <ul>
+            <ul className="card-list">
               {workout.sets.map((set) => (
-                <li key={set.id}>
-                  Set {set.setNumber}: {set.exercise.name} — {set.reps} reps ×{" "}
-                  {set.weight} {set.unit}
+                <li key={set.id} className="card">
+                  <strong>
+                    Set {set.setNumber}: {set.exercise.name}
+                  </strong>
+                  <p>
+                    {set.reps} reps × {set.weight} {set.unit}
+                  </p>
                 </li>
               ))}
             </ul>
           </section>
 
-          <div>
-            <button type="button" onClick={handleEdit}>
+          <div className="button-row">
+            <button type="button" className="btn btn-secondary" onClick={handleEdit}>
               Edit workout
             </button>
 
-            <button type="button" onClick={handleDelete} disabled={isDeleting}>
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={handleDelete}
+              disabled={isDeleting}
+            >
               {isDeleting ? "Deleting..." : "Delete workout"}
             </button>
           </div>
-        </>
+        </section>
       ) : (
-        <p>Workout not found.</p>
+        <section className="card">
+          <p>Workout not found.</p>
+        </section>
       )}
     </main>
   );

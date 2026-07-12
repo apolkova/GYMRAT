@@ -11,27 +11,35 @@ function Navbar() {
   }
 
   return (
-    <nav>
-      <Link to="/">GymRat</Link>{" "}
+    <header className="app-header">
+      <nav className="navbar">
+        <Link to="/" className="brand">
+          GymRat
+        </Link>
 
-      {isLoggedIn ? (
-        <>
-          <Link to="/dashboard">Dashboard</Link>{" "}
-          <Link to="/exercises">Exercises</Link>{" "}
-          <Link to="/workouts">Workouts</Link>{" "}
-          <Link to="/workouts/new">Log Workout</Link>{" "}
-          <Link to="/progress">Progress</Link>{" "}
-          <button type="button" onClick={handleLogout}>
-            Logout
-          </button>
-        </>
-      ) : (
-        <>
-          <Link to="/login">Login</Link>{" "}
-          <Link to="/register">Register</Link>
-        </>
-      )}
-    </nav>
+        <div className="nav-links">
+          {isLoggedIn ? (
+            <>
+              <Link to="/dashboard">Dashboard</Link>
+              <Link to="/exercises">Exercises</Link>
+              <Link to="/workouts">Workouts</Link>
+              <Link to="/workouts/new">Log Workout</Link>
+              <Link to="/progress">Progress</Link>
+              <button type="button" className="nav-button" onClick={handleLogout}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/register" className="nav-cta">
+                Register
+              </Link>
+            </>
+          )}
+        </div>
+      </nav>
+    </header>
   );
 }
 

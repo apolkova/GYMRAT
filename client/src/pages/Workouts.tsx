@@ -26,29 +26,38 @@ function Workouts() {
 
   return (
     <main>
-      <h1>Workouts</h1>
+      <div className="page-header">
+        <h1>Workouts</h1>
+        <p>Review your logged workouts.</p>
+      </div>
 
-      <p>Review your logged workouts.</p>
+      <div className="button-row">
+        <Link
+          to="/workouts/new"
+          state={{ fromWorkouts: true }}
+          className="btn btn-primary"
+        >
+          Log a new workout
+        </Link>
+      </div>
 
-      <p>
-        <Link to="/workouts/new">Log a new workout</Link>
-      </p>
-
-      {error && <p>{error}</p>}
+      {error && <p className="error">{error}</p>}
 
       {isLoading ? (
         <p>Loading workouts...</p>
       ) : workouts.length === 0 ? (
         <p>No workouts logged yet.</p>
       ) : (
-        <ul>
+        <ul className="card-list">
           {workouts.map((workout) => (
-            <li key={workout.id}>
+            <li key={workout.id} className="card">
               <Link to={`/workouts/${workout.id}`}>
                 <strong>{workout.title}</strong>
               </Link>
-              
-              <span>{new Date(workout.date).toLocaleDateString()}</span>
+
+              <p className="muted">
+                {new Date(workout.date).toLocaleDateString()}
+              </p>
 
               {workout.notes && <p>{workout.notes}</p>}
 

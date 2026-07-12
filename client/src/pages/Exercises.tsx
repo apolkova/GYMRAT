@@ -81,12 +81,14 @@ function Exercises() {
 
   return (
     <main>
-      <h1>Exercises</h1>
-      <p>Create and manage exercises for your workouts.</p>
+      <div className="page-header">
+        <h1>Exercises</h1>
+        <p>Create and manage exercises for your workouts.</p>
+      </div>
 
       {error && <p>{error}</p>}
 
-      <section>
+      <section className="card">
         <h2>Add Exercise</h2>
 
         <form onSubmit={handleSubmit}>
@@ -133,14 +135,15 @@ function Exercises() {
               placeholder="Keep your shoulder blades retracted."
             />
           </div>
-
-          <button type="submit" disabled={isCreating}>
+          <button className="btn btn-primary" type="submit" disabled={isCreating}>
             {isCreating ? "Adding..." : "Add Exercise"}
           </button>
         </form>
       </section>
 
-      <section>
+      <p></p>
+
+      <section className="card">
         <h2>Exercise Library</h2>
 
         {isLoading ? (

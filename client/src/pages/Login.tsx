@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import type { AuthResponse } from "../types/auth";
 
@@ -32,43 +32,57 @@ function Login() {
   }
 
   return (
-    <main>
-      <h1>Login</h1>
-      <p>Welcome back to GymRat.</p>
-
-      {error && <p>{error}</p>}
-
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            {...register("email", {
-              required: "Email is required",
-            })}
-            placeholder="you@example.com"
-          />
-          {errors.email && <p>{errors.email.message}</p>}
+    <main className="auth-page">
+      <section className="card auth-card">
+        <div className="page-header">
+          <h1>Login</h1>
+          <p>Welcome back to GymRat.</p>
         </div>
 
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            {...register("password", {
-              required: "Password is required",
-            })}
-            placeholder="Password"
-          />
-          {errors.password && <p>{errors.password.message}</p>}
-        </div>
+        {error && <p className="error">{error}</p>}
 
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Logging in..." : "Login"}
-        </button>
-      </form>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              {...register("email", {
+                required: "Email is required",
+              })}
+              placeholder="you@example.com"
+            />
+            {errors.email && <p className="error">{errors.email.message}</p>}
+          </div>
+
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              {...register("password", {
+                required: "Password is required",
+              })}
+              placeholder="Password"
+            />
+            {errors.password && (
+              <p className="error">{errors.password.message}</p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Logging in..." : "Login"}
+          </button>
+        </form>
+
+        <p className="muted">
+          Don&apos;t have an account? <Link to="/register">Create one</Link>
+        </p>
+      </section>
     </main>
   );
 }
